@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timmy UNC Status</title>
+    <style>
+        body {
+            font-family: Impact, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+        }
+
+        #background-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30%;
+            height: auto;
+            z-index: -1;
+        }
+
+        #youtube-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            width: 100%;
+            position: absolute;
+            top: 10px;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin: 0;
+        }
+
+        #countdown {
+            font-weight: bold;
+            background-color: white;
+            padding: 15px;
+            border: 5px solid;
+            border-image-source: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            border-image-slice: 1;
+            margin-top: 10px;
+            font-size: 2rem;
+            display: inline-block;
+        }
+
+        #timezone {
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .flying-text {
+            position: absolute;
+            font-size: 2rem;
+            color: white;
+            opacity: 0.9;
+            white-space: nowrap;
+            z-index: 1;
+            animation: rainbowText 10s ease-in-out infinite, fadeInOut 15s ease-in-out;
+        }
+
+        @keyframes rainbowText {
+            0% { color: red; }
+            14% { color: orange; }
+            28% { color: yellow; }
+            42% { color: green; }
+            57% { color: blue; }
+            71% { color: indigo; }
+            85% { color: violet; }
+            100% { color: red; }
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <iframe id="youtube-background" src="https://www.youtube.com/embed/Y8B_a0ZHNj8?autoplay=1&loop=1&playlist=Y8B_a0ZHNj8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <img id="background-image" src="https://i.etsystatic.com/17820519/r/il/34e648/6138280877/il_1080xN.6138280877_n71h.jpg" alt="Background">
+    
+    <header>
+        <h1>Timmy UNC Status</h1>
+        <div id="countdown"></div>
+        <label for="timezone">Choose your timezone:</label>
+        <select id="timezone">
+            <option value="Europe/Oslo">Norway (UTC+1)</option>
+            <option value="UTC">UTC</option>
+            <option value="America/New_York">New York (UTC-5)</option>
+            <option value="Asia/Tokyo">Tokyo (UTC+9)</option>
+            <option value="Australia/Sydney">Sydney (UTC+11)</option>
+        </select>
+    </header>
+
+    <script>
+        const countdownElement = document.getElementById('countdown');
+        const timezoneSelect = document.getElementById('timezone');
+        const flyingTexts = [];
+        const flyingTextMessages = [
+            "Timmy turning 19", "officially Unc", "Old Unc Timmy hits 19",
+            "Timmy at 19 Uncle Era", "Unc Timmy too old for rizz", "Timmy turns 19, back hurts",
+            "Unc Timmy can’t hit griddy", "19 and Timmy’s knees gave out", "Timmy turning 19, Fortnite boomer",
+            "Unc Timmy still uses Facebook", "Timmy’s 19, TikTok’s not for Uncs", "Unc Timmy 19-year-old grindset"
+        ];
+
+        function updateCountdown() {
+            const selectedTimezone = timezoneSelect.value;
+            const targetDate = new Date('2025-04-10T00:00:00').toLocaleString("en-US", {timeZone: selectedTimezone});
+            const now = new Date().toLocaleString("en-US", {timeZone: selectedTimezone});
+            const timeDifference = new Date(targetDate) - new Date(now);
+
+            if (timeDifference <= 0) {
+                countdownElement.textContent = "Time's up!";
+                return;
+            }
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        timezoneSelect.addEventListener('change', updateCountdown);
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function isColliding(a, b) {
+            const rectA = a.getBoundingClientRect();
+            const rectB = b.getBoundingClientRect();
+
+            return (
+                rectA.left < rectB.right &&
+                rectA.right > rectB.left &&
+                rectA.top < rectB.bottom &&
+                rectA.bottom > rectB.top
+            );
+        }
+
+        function createFlyingText() {
+            if (flyingTexts.length >= 5) return;
+
+            const text = document.createElement('div');
+            text.classList.add('flying-text');
+            text.textContent = flyingTextMessages[Math.floor(Math.random() * flyingTextMessages.length)];
+
+            const randomSize = Math.random() * 30 + 20;
+            text.style.fontSize = `${randomSize}px`;
+
+            let posX = Math.random() * (window.innerWidth - randomSize * 5);
+            let posY = Math.random() * (window.innerHeight - randomSize * 2);
+            let speedX = (Math.random() - 0.5) * 3;
+            let speedY = (Math.random() - 0.5) * 3;
+
+            function moveText() {
+                posX += speedX;
+                posY += speedY;
+
+                if (posX <= 0 || posX + text.offsetWidth >= window.innerWidth) speedX *= -1;
+                if (posY <= 0 || posY + text.offsetHeight >= window.innerHeight) speedY *= -1;
+
+                text.style.left = `${posX}px`;
+                text.style.top = `${posY}px`;
+
+                flyingTexts.forEach(otherText => {
+                    if (otherText !== text && isColliding(text, otherText)) {
+                        speedX *= -1;
+                        speedY *= -1;
+                    }
+                });
+            }
+
+            setInterval(moveText, 16);
+            flyingTexts.push(text);
+            document.body.appendChild(text);
+
+            setTimeout(() => {
+                flyingTexts.splice(flyingTexts.indexOf(text), 1);
+                text.remove();
+            }, 15000);
+        }
+
+        setInterval(createFlyingText, 3000);
+    </script>
+</body>
+</html>
