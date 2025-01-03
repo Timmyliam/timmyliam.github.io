@@ -134,14 +134,15 @@
 
         <!-- Audio element for background music -->
         <audio autoplay loop>
-            <source src="https://github.com/Timmyliam/timmyliam.github.io/blob/e3d6a7ebadf1b6f37355dff06a9cc5f05cc4ed18/bladee.mp3?raw=true" type="audio/mp3">
+            <source src="https://raw.githubusercontent.com/Timmyliam/timmyliam.github.io/e3d6a7ebadf1b6f37355dff06a9cc5f05cc4ed18/bladee.mp3" type="audio/mp3">
             Your browser does not support the audio element.
         </audio>
     </div>
 
     <script>
         function updateCountdown() {
-            const targetDate = new Date("April 10, 2025 00:00:00").getTime();
+            // Use UTC to avoid timezone issues
+            const targetDate = new Date(Date.UTC(2025, 3, 10, 0, 0, 0)); // April 10, 2025 at 00:00 UTC
             const currentDate = new Date().getTime();
             const timeLeft = targetDate - currentDate;
 
