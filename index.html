@@ -140,26 +140,34 @@
     </div>
 
     <script>
-        function updateCountdown() {
-            // Use UTC to avoid timezone issues
-            const targetDate = new Date(Date.UTC(2025, 3, 10, 0, 0, 0));
-            const currentDate = new Date().getTime();
-            const timeLeft = targetDate - currentDate;
+function updateCountdown() {
+    // Target date in UTC (April 10, 2025, 00:00:00)
+    const targetDate = new Date(Date.UTC(2025, 3, 10, 0, 0, 0));
 
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    // Get the current time in Oslo (local time)
+    const now = new Date();
+    
+    // Convert target UTC time to Oslo time
+    const osloOffset = now.toLocaleString("en-US", { timeZone: "Europe/Oslo" });
+    const osloTime = new Date(osloOffset).getTime();
 
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    const timeLeft = targetDate - osloTime;
 
-            if (timeLeft < 0) {
-                document.getElementById("countdown").innerHTML = "EXPIRED";
-            }
-        }
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    if (timeLeft < 0) {
+        document.getElementById("countdown").innerHTML = "EXPIRED";
+    }
+}
+
+// Update every second
+setInterval(updateCountdown, 1000);
+
     </script>
 </body>
 </html>
