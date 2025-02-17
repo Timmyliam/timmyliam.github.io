@@ -142,7 +142,7 @@
     <script>
         function updateCountdown() {
             // Use UTC to avoid timezone issues
-            const targetDate = new Date(Date.CET(2025, 3, 10, 0, 0, 0));
+            const targetDate = new Date(Date.UTC(2025, 3, 10, 0, 0, 0));
             const currentDate = new Date().getTime();
             const timeLeft = targetDate - currentDate;
 
