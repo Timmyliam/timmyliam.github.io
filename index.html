@@ -1,176 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIMMY IS SO UNC LMAO</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIMMY IS SO UNC LMAO</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #111;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
 
-        .rainbow-text {
-            font-size: 3rem;
-            font-weight: bold;
-            color: white;
-            animation: rainbow 3s infinite linear;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 
-                         0 0 30px rgba(255, 0, 0, 0.6), 
-                         0 0 45px rgba(255, 0, 0, 0.4), 
-                         0 0 60px rgba(255, 0, 0, 0.2), 
-                         0 0 75px rgba(255, 0, 0, 0.1);
-        }
+    .rainbow-text {
+      font-size: 3rem;
+      font-weight: bold;
+      color: white;
+      animation: rainbow 3s infinite linear;
+      text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 
+                  0 0 30px rgba(255, 0, 0, 0.6), 
+                  0 0 45px rgba(255, 0, 0, 0.4), 
+                  0 0 60px rgba(255, 0, 0, 0.2), 
+                  0 0 75px rgba(255, 0, 0, 0.1);
+    }
 
-        @keyframes rainbow {
-            0% {
-                text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 
-                             0 0 30px rgba(255, 0, 0, 0.6), 
-                             0 0 45px rgba(255, 0, 0, 0.4), 
-                             0 0 60px rgba(255, 0, 0, 0.2), 
-                             0 0 75px rgba(255, 0, 0, 0.1);
-            }
-            14% {
-                text-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 
-                             0 0 30px rgba(255, 165, 0, 0.6), 
-                             0 0 45px rgba(255, 165, 0, 0.4), 
-                             0 0 60px rgba(255, 165, 0, 0.2), 
-                             0 0 75px rgba(255, 165, 0, 0.1);
-            }
-            28% {
-                text-shadow: 0 0 15px rgba(255, 255, 0, 0.8), 
-                             0 0 30px rgba(255, 255, 0, 0.6), 
-                             0 0 45px rgba(255, 255, 0, 0.4), 
-                             0 0 60px rgba(255, 255, 0, 0.2), 
-                             0 0 75px rgba(255, 255, 0, 0.1);
-            }
-            42% {
-                text-shadow: 0 0 15px rgba(0, 128, 0, 0.8), 
-                             0 0 30px rgba(0, 128, 0, 0.6), 
-                             0 0 45px rgba(0, 128, 0, 0.4), 
-                             0 0 60px rgba(0, 128, 0, 0.2), 
-                             0 0 75px rgba(0, 128, 0, 0.1);
-            }
-            57% {
-                text-shadow: 0 0 15px rgba(0, 0, 255, 0.8), 
-                             0 0 30px rgba(0, 0, 255, 0.6), 
-                             0 0 45px rgba(0, 0, 255, 0.4), 
-                             0 0 60px rgba(0, 0, 255, 0.2), 
-                             0 0 75px rgba(0, 0, 255, 0.1);
-            }
-            71% {
-                text-shadow: 0 0 15px rgba(75, 0, 130, 0.8), 
-                             0 0 30px rgba(75, 0, 130, 0.6), 
-                             0 0 45px rgba(75, 0, 130, 0.4), 
-                             0 0 60px rgba(75, 0, 130, 0.2), 
-                             0 0 75px rgba(75, 0, 130, 0.1);
-            }
-            85% {
-                text-shadow: 0 0 15px rgba(238, 130, 238, 0.8), 
-                             0 0 30px rgba(238, 130, 238, 0.6), 
-                             0 0 45px rgba(238, 130, 238, 0.4), 
-                             0 0 60px rgba(238, 130, 238, 0.2), 
-                             0 0 75px rgba(238, 130, 238, 0.1);
-            }
-            100% {
-                text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 
-                             0 0 30px rgba(255, 0, 0, 0.6), 
-                             0 0 45px rgba(255, 0, 0, 0.4), 
-                             0 0 60px rgba(255, 0, 0, 0.2), 
-                             0 0 75px rgba(255, 0, 0, 0.1);
-            }
-        }
+    @keyframes rainbow {
+      0% { text-shadow: 0 0 15px rgba(255,0,0,0.8);}
+      14% { text-shadow: 0 0 15px rgba(255,165,0,0.8);}
+      28% { text-shadow: 0 0 15px rgba(255,255,0,0.8);}
+      42% { text-shadow: 0 0 15px rgba(0,128,0,0.8);}
+      57% { text-shadow: 0 0 15px rgba(0,0,255,0.8);}
+      71% { text-shadow: 0 0 15px rgba(75,0,130,0.8);}
+      85% { text-shadow: 0 0 15px rgba(238,130,238,0.8);}
+      100% { text-shadow: 0 0 15px rgba(255,0,0,0.8);}
+    }
 
-        .countdown-box {
-            display: inline-block;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            border-radius: 10px;
-            font-size: 2rem;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+    .countdown-box {
+      display: inline-block;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      border-radius: 10px;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
 
-        .gif-container {
-            margin-top: 20px;
-        }
+    .gif-container {
+      margin-top: 20px;
+    }
 
-        .gif-container img {
-            width: 250px; /* Increased the size of the GIF */
-            height: auto;
-        }
-    </style>
+    .gif-container img {
+      width: 250px;
+      height: auto;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #444;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .buttons button:hover {
+      background: #888;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="rainbow-text">Timmy UNC Status (20 år btw)</h1>
-        <div class="countdown-box" id="countdown"></div>
-        <div class="gif-container">
-            <img src="https://media1.tenor.com/m/ekZ0rmWhseAAAAAd/sizif.gif" alt="Fireworks GIF">
-        </div>
+  <div class="container">
+    <h1 class="rainbow-text">Timmy UNC Status (20 år btw)</h1>
 
-        <!-- Audio element for background music -->
-        <audio autoplay loop>
-            <source src="https://raw.githubusercontent.com/Timmyliam/timmyliam.github.io/e3d6a7ebadf1b6f37355dff06a9cc5f05cc4ed18/bladee.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
+    <div class="buttons">
+      <button onclick="setTarget('William')">William (22 June 2007)</button>
+      <button onclick="setTarget('Isak')">Isak (1 October 2007)</button>
+      <button onclick="setTarget('Mats')">Mats (24 April 2007)</button>
     </div>
 
-    <script>
-function updateCountdown() {
-    // Target date in UTC (April 10, 2026, 00:00:00)
-    const targetDate = new Date(Date.UTC(2026, 3, 10, 0, 0, 0));
+    <div class="countdown-box" id="countdown"></div>
+    <div class="gif-container">
+      <img src="https://media1.tenor.com/m/ekZ0rmWhseAAAAAd/sizif.gif" alt="Fireworks GIF">
+    </div>
 
-    // Get the current time in Oslo (local time)
-    const now = new Date();
-    
-    // Convert target UTC time to Oslo time
-    const osloOffset = now.toLocaleString("en-US", { timeZone: "Europe/Oslo" });
-    const osloTime = new Date(osloOffset).getTime();
+    <audio autoplay loop>
+      <source src="https://raw.githubusercontent.com/Timmyliam/timmyliam.github.io/e3d6a7ebadf1b6f37355dff06a9cc5f05cc4ed18/bladee.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
 
-    const timeLeft = targetDate - osloTime;
+  <script>
+    let targetDate = null;
 
-    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    const birthdays = {
+      "William": { month: 5, day: 22 }, // June 22 (month is 0-indexed)
+      "Isak": { month: 9, day: 1 },    // October 1
+      "Mats": { month: 3, day: 24 }    // April 24
+    };
 
-    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    function setTarget(person) {
+      const now = new Date();
+      const { month, day } = birthdays[person];
+      let year = now.getFullYear();
 
-    if (timeLeft < 0) {
-        document.getElementById("countdown").innerHTML = "EXPIRED";
+      targetDate = new Date(year, month, day, 0, 0, 0);
+
+      // if date has already passed this year -> set for next year
+      if (targetDate < now) {
+        targetDate.setFullYear(year + 1);
+      }
     }
-}
 
-// Update every second
-setInterval(updateCountdown, 1000);
+    function updateCountdown() {
+      if (!targetDate) {
+        document.getElementById("countdown").innerHTML = "Pick a person!";
+        return;
+      }
 
-    </script>
+      const now = new Date();
+      const timeLeft = targetDate - now;
+
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+      if (timeLeft < 0) {
+        document.getElementById("countdown").innerHTML = "EXPIRED";
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
-
-
-
