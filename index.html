@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TIMMY IS SO UNC LMAO</title>
+  <title>UNC Counter</title>
   <style>
     * {
       margin: 0;
@@ -37,11 +37,6 @@
       font-weight: bold;
       color: white;
       animation: rainbow 3s infinite linear;
-      text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 
-                  0 0 30px rgba(255, 0, 0, 0.6), 
-                  0 0 45px rgba(255, 0, 0, 0.4), 
-                  0 0 60px rgba(255, 0, 0, 0.2), 
-                  0 0 75px rgba(255, 0, 0, 0.1);
     }
 
     @keyframes rainbow {
@@ -98,12 +93,13 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="rainbow-text">Timmy UNC Status (20 år btw)</h1>
+    <h1 class="rainbow-text">UNC Counter</h1>
 
     <div class="buttons">
-      <button onclick="setTarget('William')">William (22 June 2007)</button>
-      <button onclick="setTarget('Isak')">Isak (1 October 2007)</button>
-      <button onclick="setTarget('Mats')">Mats (24 April 2007)</button>
+      <button onclick="setTarget('Timmy')">Timmy</button>
+      <button onclick="setTarget('William')">William</button>
+      <button onclick="setTarget('Isak')">Isak</button>
+      <button onclick="setTarget('Mats')">Mats</button>
     </div>
 
     <div class="countdown-box" id="countdown"></div>
@@ -121,9 +117,10 @@
     let targetDate = null;
 
     const birthdays = {
-      "William": { month: 5, day: 22 }, // June 22 (month is 0-indexed)
-      "Isak": { month: 9, day: 1 },    // October 1
-      "Mats": { month: 3, day: 24 }    // April 24
+      "Timmy": { month: 3, day: 10 },   // April 10
+      "William": { month: 5, day: 22 }, // June 22
+      "Isak": { month: 9, day: 1 },     // October 1
+      "Mats": { month: 3, day: 24 }     // April 24
     };
 
     function setTarget(person) {
