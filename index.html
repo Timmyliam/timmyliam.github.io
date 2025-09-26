@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UNC Counter</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -19,11 +15,37 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      text-align: center;
       overflow: hidden;
     }
 
+    /* BACKGROUND CHAT */
+    #chat-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      font-family: monospace;
+      opacity: 0.35;
+    }
+
+    .chat-line {
+      white-space: nowrap;
+      animation: scrollUp linear infinite;
+    }
+
+    @keyframes scrollUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(-120%); }
+    }
+
+    /* FOREGROUND */
     .container {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -44,7 +66,6 @@
     .rainbow-text {
       font-size: 3rem;
       font-weight: bold;
-      color: white;
       animation: rainbow 3s infinite linear;
       margin-bottom: 20px;
     }
@@ -58,9 +79,7 @@
       100% { text-shadow: 0 0 15px violet; }
     }
 
-    .buttons {
-      margin-bottom: 20px;
-    }
+    .buttons { margin-bottom: 20px; }
 
     .buttons button {
       margin: 8px;
@@ -82,7 +101,6 @@
     }
 
     .countdown-box {
-      display: inline-block;
       padding: 20px 40px;
       background: rgba(255, 255, 255, 0.08);
       border: 2px solid rgba(255, 255, 255, 0.2);
@@ -98,22 +116,20 @@
       color: #ccc;
       margin-bottom: 15px;
       font-style: italic;
-      animation: fadeIn 0.8s ease;
-    }
-
-    .gif-container {
-      margin-top: 20px;
     }
 
     .gif-container img {
       width: 220px;
-      height: auto;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
 <body>
+  <!-- Twitch chat background -->
+  <div id="chat-bg"></div>
+
+  <!-- Foreground content -->
   <div class="container">
     <h1 class="rainbow-text">UNC Counter</h1>
 
@@ -138,14 +154,15 @@
   </div>
 
   <script>
+    /* ====== Countdown Logic ====== */
     let targetDate = null;
     let currentPerson = null;
 
     const birthdays = {
-      "Timmy": { month: 3, day: 10, year: 2006 },   // April 10
-      "William": { month: 5, day: 22, year: 2007 }, // June 22
-      "Isak": { month: 9, day: 1, year: 2007 },     // October 1
-      "Mats": { month: 3, day: 24, year: 2007 }     // April 24
+      "Timmy": { month: 3, day: 10, year: 2006 },
+      "William": { month: 5, day: 22, year: 2007 },
+      "Isak": { month: 9, day: 1, year: 2007 },
+      "Mats": { month: 3, day: 24, year: 2007 }
     };
 
     function setTarget(person) {
@@ -156,14 +173,11 @@
 
       targetDate = new Date(targetYear, month, day, 0, 0, 0);
 
-      // if date has already passed this year -> set for next year
       if (targetDate < now) {
         targetDate.setFullYear(targetYear + 1);
       }
 
-      // calculate age they will turn
       let age = targetDate.getFullYear() - year;
-
       document.getElementById("person-info").innerHTML =
         `${person} will turn <strong>${age}</strong> 🎉`;
     }
@@ -191,6 +205,81 @@
     }
 
     setInterval(updateCountdown, 1000);
+
+    /* ====== Twitch Chat Roastfest ====== */
+    const messages = [
+      "Zoomer420: bro unlocked arthritis.exe LULW",
+      "GrannySlayer69: ur knees louder than my keyboard 💀",
+      "NFT_Boomer: happy bday fossil PogChamp",
+      "YeetGrandpa: ur joints got patch notes? KEKW",
+      "SkillIssue99: warranty expired 3 patches ago OMEGALUL",
+      "BackPainMain: imagine aging in 4k 😭😭",
+      "BetaBoomer: early access to senior discounts LMAO",
+      "CrocsEnthusiast: not vintage, just lagging IRL 🕰️",
+      "LowFPS_Legs: birthday buff = +5 naps, -10 stamina ResidentSleeper",
+      "CrustyUSB: man creaks louder than door hinges kekw",
+      "AncientScrolls: ur birth cert written in Latin 📜",
+      "DinoDude: happy extinction day 🦖",
+      "BackseatKid: imagine ur candles start a wildfire 🔥 KEKW",
+      "VitaminDDeficient: old man side quest: touch grass",
+      "404_HairNotFound: u ain’t old, u just retro DLC",
+      "NapKing: gg wp another year closer to bed at 8pm",
+      "ArthritisGod: knees be speedrunning death%",
+      "CreakTok: body plays remix every time u stand LUL",
+      "OldManDebuff: bro got ping spikes in his spine 🫠",
+      "MicrowaveMeme: boomer memes unlocked PogU",
+      "SleepyStreamer: birthday stream? more like napathon Zzz",
+      "VelcroShoes: ancient tech, still running dial-up brain 📞",
+      "NoCapKnees: joints louder than Valorant comms",
+      "FlopEra: first selfie was cave art 😭",
+      "EarlyBirdMenu: 4pm dinner squad rise up 🐔",
+      "LaggingGrandpa: stretching = cardio KEKW",
+      "BaldPatchNotes: bro running on Windows XP fr",
+      "JPEG_Memories: life in 144p sepia 💀",
+      "CouchWarrior: sneeze crit hit ur spine 😂",
+      "GigaNap: party till 8:30 then hibernate",
+      "BoomerWifi: antique but unstable connection 📶",
+      "ObsoleteMeme: ur jokes got more wrinkles than ur face",
+      "EnergyDrinkNana: caffeine or CPR? LUL",
+      "ExpiredMilk: free trial ending soon 😬",
+      "SleepModeOn: wild night = 2 Netflix eps KEKL",
+      "GroanLord: sounds like Minecraft gravel 🪨",
+      "BackInMyDay89: patch notes for history class",
+      "DiscountDaddy: senior menu speedrun 🍽️",
+      "HistoryChannelSub: walking museum exhibit Pog",
+      "MailboxCamper: “going out” = mailbox any% run",
+      "DinoWifi: Jurassic Park collab when?",
+      "HolyRelic: bro owes Jesus a sub 💀",
+      "Collector’sEdition: antique, mint condition (not)",
+      "BugFixDad: body on duct tape updates",
+      "DoctorAppointmentMain: lore = waiting rooms",
+      "DialUpSoul: wifi faster than ur reaction OMEGALUL",
+      "BoomerangLag: moving in 10fps 💀",
+      "SunsetSleeper: bedtime before sunset 🌅",
+      "HieroglyphicTexter: emojis = cave paintings for u"
+    ];
+
+    function randomColor() {
+      const colors = ["#FF5555", "#55FF55", "#5599FF", "#FFAA33", "#FF33AA", "#AA55FF", "#33FFF7"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function spawnChat() {
+      const chat = document.getElementById("chat-bg");
+      const msg = document.createElement("div");
+      msg.className = "chat-line";
+      msg.style.color = randomColor();
+      msg.style.position = "absolute";
+      msg.style.left = Math.random() * 80 + "%";
+      msg.style.fontSize = Math.random() * 0.3 + 0.8 + "rem";
+      msg.style.animationDuration = Math.random() * 15 + 15 + "s";
+      msg.innerText = messages[Math.floor(Math.random() * messages.length)];
+      chat.appendChild(msg);
+
+      setTimeout(() => msg.remove(), 30000);
+    }
+
+    setInterval(spawnChat, 600); // new line every 0.6s
   </script>
 </body>
 </html>
