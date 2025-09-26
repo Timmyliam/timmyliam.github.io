@@ -12,15 +12,14 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1e1e1e, #2a2a2a);
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       text-align: center;
-      position: relative;
       overflow: hidden;
     }
 
@@ -28,8 +27,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      position: relative;
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .rainbow-text {
@@ -37,28 +46,59 @@
       font-weight: bold;
       color: white;
       animation: rainbow 3s infinite linear;
+      margin-bottom: 20px;
     }
 
     @keyframes rainbow {
-      0% { text-shadow: 0 0 15px rgba(255,0,0,0.8);}
-      14% { text-shadow: 0 0 15px rgba(255,165,0,0.8);}
-      28% { text-shadow: 0 0 15px rgba(255,255,0,0.8);}
-      42% { text-shadow: 0 0 15px rgba(0,128,0,0.8);}
-      57% { text-shadow: 0 0 15px rgba(0,0,255,0.8);}
-      71% { text-shadow: 0 0 15px rgba(75,0,130,0.8);}
-      85% { text-shadow: 0 0 15px rgba(238,130,238,0.8);}
-      100% { text-shadow: 0 0 15px rgba(255,0,0,0.8);}
+      0% { text-shadow: 0 0 15px red; }
+      20% { text-shadow: 0 0 15px orange; }
+      40% { text-shadow: 0 0 15px yellow; }
+      60% { text-shadow: 0 0 15px lime; }
+      80% { text-shadow: 0 0 15px cyan; }
+      100% { text-shadow: 0 0 15px violet; }
+    }
+
+    .buttons {
+      margin-bottom: 20px;
+    }
+
+    .buttons button {
+      margin: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #444, #666);
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .buttons button:hover {
+      background: linear-gradient(135deg, #666, #999);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
     }
 
     .countdown-box {
       display: inline-block;
-      padding: 20px;
-      background-color: rgba(255, 255, 255, 0.2);
-      border: 2px solid white;
-      border-radius: 10px;
+      padding: 20px 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
       font-size: 2rem;
       font-weight: bold;
-      margin-top: 20px;
+      margin-bottom: 15px;
+      min-width: 250px;
+    }
+
+    .person-info {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-bottom: 15px;
+      font-style: italic;
+      animation: fadeIn 0.8s ease;
     }
 
     .gif-container {
@@ -66,28 +106,10 @@
     }
 
     .gif-container img {
-      width: 250px;
+      width: 220px;
       height: auto;
-    }
-
-    .buttons {
-      margin-top: 20px;
-    }
-
-    .buttons button {
-      margin: 5px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #444;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .buttons button:hover {
-      background: #888;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
@@ -102,7 +124,9 @@
       <button onclick="setTarget('Mats')">Mats</button>
     </div>
 
+    <div id="person-info" class="person-info">Pick a person!</div>
     <div class="countdown-box" id="countdown"></div>
+
     <div class="gif-container">
       <img src="https://media1.tenor.com/m/ekZ0rmWhseAAAAAd/sizif.gif" alt="Fireworks GIF">
     </div>
@@ -115,30 +139,38 @@
 
   <script>
     let targetDate = null;
+    let currentPerson = null;
 
     const birthdays = {
-      "Timmy": { month: 3, day: 10 },   // April 10
-      "William": { month: 5, day: 22 }, // June 22
-      "Isak": { month: 9, day: 1 },     // October 1
-      "Mats": { month: 3, day: 24 }     // April 24
+      "Timmy": { month: 3, day: 10, year: 2006 },   // April 10
+      "William": { month: 5, day: 22, year: 2007 }, // June 22
+      "Isak": { month: 9, day: 1, year: 2007 },     // October 1
+      "Mats": { month: 3, day: 24, year: 2007 }     // April 24
     };
 
     function setTarget(person) {
+      currentPerson = person;
       const now = new Date();
-      const { month, day } = birthdays[person];
-      let year = now.getFullYear();
+      const { month, day, year } = birthdays[person];
+      let targetYear = now.getFullYear();
 
-      targetDate = new Date(year, month, day, 0, 0, 0);
+      targetDate = new Date(targetYear, month, day, 0, 0, 0);
 
       // if date has already passed this year -> set for next year
       if (targetDate < now) {
-        targetDate.setFullYear(year + 1);
+        targetDate.setFullYear(targetYear + 1);
       }
+
+      // calculate age they will turn
+      let age = targetDate.getFullYear() - year;
+
+      document.getElementById("person-info").innerHTML =
+        `${person} will turn <strong>${age}</strong> 🎉`;
     }
 
     function updateCountdown() {
-      if (!targetDate) {
-        document.getElementById("countdown").innerHTML = "Pick a person!";
+      if (!targetDate || !currentPerson) {
+        document.getElementById("countdown").innerHTML = "--";
         return;
       }
 
