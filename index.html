@@ -34,12 +34,21 @@
 
     .chat-line {
       white-space: nowrap;
-      animation: scrollUp linear infinite;
+      position: absolute;
+      bottom: -2rem;
+      opacity: 0;
+      animation: floatUp linear forwards;
     }
 
-    @keyframes scrollUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(-120%); }
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(-120vh);
+        opacity: 1;
+      }
     }
 
     /* FOREGROUND */
@@ -138,6 +147,7 @@
       <button onclick="setTarget('William')">William</button>
       <button onclick="setTarget('Isak')">Isak</button>
       <button onclick="setTarget('Mats')">Mats</button>
+      <button onclick="setTarget('Ådne')">Ådne</button>
     </div>
 
     <div id="person-info" class="person-info">Pick a person!</div>
@@ -147,7 +157,7 @@
       <img src="https://media1.tenor.com/m/ekZ0rmWhseAAAAAd/sizif.gif" alt="Fireworks GIF">
     </div>
 
-    <audio autoplay loop>
+    <audio id="bg-audio" autoplay loop muted>
       <source src="https://raw.githubusercontent.com/Timmyliam/timmyliam.github.io/e3d6a7ebadf1b6f37355dff06a9cc5f05cc4ed18/bladee.mp3" type="audio/mp3">
       Your browser does not support the audio element.
     </audio>
@@ -162,7 +172,9 @@
       "Timmy": { month: 3, day: 10, year: 2006 },
       "William": { month: 5, day: 22, year: 2007 },
       "Isak": { month: 9, day: 1, year: 2007 },
-      "Mats": { month: 3, day: 24, year: 2007 }
+      "Mats": { month: 3, day: 24, year: 2007 },
+      "Ådne": { month: 6, day: 4, year: 2006 }
+
     };
 
     function setTarget(person) {
@@ -269,17 +281,24 @@
       const msg = document.createElement("div");
       msg.className = "chat-line";
       msg.style.color = randomColor();
-      msg.style.position = "absolute";
       msg.style.left = Math.random() * 80 + "%";
       msg.style.fontSize = Math.random() * 0.3 + 0.8 + "rem";
-      msg.style.animationDuration = Math.random() * 15 + 15 + "s";
+      msg.style.animationDuration = Math.random() * 12 + 10 + "s";
       msg.innerText = messages[Math.floor(Math.random() * messages.length)];
       chat.appendChild(msg);
 
-      setTimeout(() => msg.remove(), 30000);
+      setTimeout(() => msg.remove(), 22000);
     }
 
     setInterval(spawnChat, 600); // new line every 0.6s
+
+    const bgAudio = document.getElementById('bg-audio');
+    document.body.addEventListener('click', () => {
+      if (bgAudio.paused || bgAudio.muted) {
+        bgAudio.muted = false;
+        bgAudio.play().catch(() => {});
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
