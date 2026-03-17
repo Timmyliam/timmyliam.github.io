@@ -32,6 +32,39 @@
       opacity: 0.35;
     }
 
+    #disco-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease, visibility 0.2s ease;
+      mix-blend-mode: screen;
+      overflow: hidden;
+    }
+
+    #disco-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .disco-dot {
+      position: absolute;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      opacity: 0.08;
+      animation: discoPulse 2.2s ease-in-out infinite;
+      filter: blur(1px);
+      mix-blend-mode: screen;
+    }
+
+    @keyframes discoPulse {
+      0%, 100% { transform: scale(0.6); opacity: 0.05; }
+      50% { transform: scale(1.2); opacity: 0.4; }
+    }
+
     .chat-line {
       white-space: nowrap;
       position: absolute;
@@ -137,6 +170,7 @@
 <body>
   <!-- Twitch chat background -->
   <div id="chat-bg"></div>
+  <div id="disco-overlay"></div>
 
   <!-- Foreground content -->
   <div class="container">
@@ -158,7 +192,7 @@
       <img src="https://media1.tenor.com/m/ekZ0rmWhseAAAAAd/sizif.gif" alt="Fireworks GIF">
     </div>
 
-    <audio id="bg-audio" autoplay loop muted>
+    <audio id="bg-audio" autoplay loop>
       <source src="https://raw.githubusercontent.com/Timmyliam/timmyliam.github.io/e3d6a7ebadf1b6f37355dff06a9cc5f05cc4ed18/bladee.mp3" type="audio/mp3">
       Your browser does not support the audio element.
     </audio>
@@ -175,9 +209,94 @@
       "Isak": { month: 9, day: 1, year: 2007 },
       "Mats": { month: 3, day: 24, year: 2007 },
       "Ådne": { month: 5, day: 4, year: 2006 },
-      "Ludde": { month: 3, day: 3, year: 2007 }
-
+      "Ludde": { month: 1, day: 1, year: 2000 }
     };
+
+    const bgAudio = document.getElementById('bg-audio');
+    let isDiscoActive = false;
+    if (bgAudio) {
+      bgAudio.volume = 0.5;
+      bgAudio.muted = false;
+    }
+
+    function setAudioSource(src, loop = true, volume = 0.5) {
+      return new Promise((resolve) => {
+        if (!bgAudio) return resolve();
+
+        const fadeOutDuration = 500;
+        const fadeInDuration = 700;
+        const startVolume = bgAudio.volume;
+
+        let step = 50;
+        let steps = fadeOutDuration / step;
+        let currentStep = 0;
+
+        const fadeOut = setInterval(() => {
+          currentStep++;
+          bgAudio.volume = Math.max(0, startVolume * (1 - currentStep / steps));
+          if (currentStep >= steps) {
+            clearInterval(fadeOut);
+            bgAudio.src = src;
+            bgAudio.loop = loop;
+            bgAudio.volume = 0;
+            bgAudio.play().catch(() => {});
+
+            let inStep = 0;
+            let inSteps = fadeInDuration / step;
+            const fadeIn = setInterval(() => {
+              inStep++;
+              bgAudio.volume = Math.min(volume, (volume * inStep) / inSteps);
+              if (inStep >= inSteps) {
+                clearInterval(fadeIn);
+                bgAudio.volume = volume;
+                resolve();
+              }
+            }, step);
+          }
+        }, step);
+      });
+    }
+
+    function createDiscoLights() {
+      const overlay = document.getElementById('disco-overlay');
+      if (!overlay) return;
+      overlay.innerHTML = '';
+      const count = 25;
+
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'disco-dot';
+        const size = 50 + Math.random() * 160;
+        const color = ['#ff005D', '#00FFCB', '#F4FF00', '#8C00FF', '#00AEFF'][Math.floor(Math.random() * 5)];
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+        dot.style.background = color;
+        dot.style.top = `${Math.random() * 100}%`;
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.animationDuration = `${1.8 + Math.random() * 1.4}s`;
+        dot.style.animationDelay = `${Math.random() * 1.2}s`;
+        dot.style.opacity = '0.08';
+        overlay.appendChild(dot);
+      }
+    }
+
+    function activateDisco() {
+      if (isDiscoActive) return;
+      isDiscoActive = true;
+      createDiscoLights();
+      const overlay = document.getElementById('disco-overlay');
+      if (overlay) overlay.classList.add('active');
+      setAudioSource('https://raw.githubusercontent.com/Timmyliam/timmyliam.github.io/main/Fucker.mp3', true, 0.7).catch(() => {});
+    }
+
+    function deactivateDisco() {
+      if (!isDiscoActive) return;
+      isDiscoActive = false;
+      const overlay = document.getElementById('disco-overlay');
+      if (overlay) overlay.classList.remove('active');
+      setTimeout(() => { if (overlay) overlay.innerHTML = ''; }, 1000);
+      setAudioSource('https://raw.githubusercontent.com/Timmyliam/timmyliam.github.io/e3d6a7ebadf1b6f37355dff06a9cc5f05cc4ed18/bladee.mp3', true, 0.5).catch(() => {});
+    }
 
     function setTarget(person) {
       currentPerson = person;
@@ -194,6 +313,12 @@
       let age = targetDate.getFullYear() - year;
       document.getElementById("person-info").innerHTML =
         `${person} will turn <strong>${age}</strong> 🎉`;
+
+      if (person === 'Ludde') {
+        activateDisco();
+      } else {
+        deactivateDisco();
+      }
     }
 
     function updateCountdown() {
